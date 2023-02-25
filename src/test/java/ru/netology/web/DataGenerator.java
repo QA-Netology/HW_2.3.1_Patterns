@@ -9,9 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class DataGenerator {
 
-    static {
-        new Faker(new Locale("ru"));
-    }
+    static Faker faker = new Faker(new Locale("ru"));
 
     private DataGenerator() {
     }
@@ -21,7 +19,7 @@ public class DataGenerator {
         }
 
         public static User generateUser() {
-            return new User(generateCity(), generateDate(3), generateName(), generatePhone());
+            return new User(generateCity(), generateName(), generatePhone());
         }
 
         public static String generateCity() {
@@ -35,15 +33,13 @@ public class DataGenerator {
         }
 
         public static String generateName() {
-            Faker faker = new Faker(new Locale("ru"));
-            AtomicReference<String> randomName = new AtomicReference<>(faker.name().firstName() + " " + faker.name().lastName());
-            return randomName.get();
+            String name = faker.name().lastName();
+            name = name + " " + faker.name().firstName();
+            return name;
         }
 
         public static String generatePhone() {
-            Faker faker = new Faker(new Locale("ru"));
             return faker.phoneNumber().phoneNumber();
         }
     }
-
 }
